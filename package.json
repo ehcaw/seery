@@ -41,6 +41,8 @@
     "electron-squirrel-startup": "^1.0.1",
     "framer-motion": "^12.12.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-mic": "^12.4.6",
+    "react-use": "^17.6.0"
   }
 }
