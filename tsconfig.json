@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    // Target modern JavaScript features
+    "target": "ESNext",
+    // Specify module code generation
+    "module": "CommonJS", // CommonJS for Electron main/preload, ESNext might work for renderer depending on build
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Include DOM libraries for browser APIs in renderer
+    // Enable React JSX support
+    "jsx": "react-jsx", // Or "react" if using older React versions/runtime=classic
+    // Strict type checking options
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Allows default imports from modules with no default export
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Ensure consistent casing in file names
+    "noEmit": true, // Do not emit output files (Webpack/Vite will handle bundling)
+    "resolveJsonModule": true, // Allow importing .json files
+    "isolatedModules": true, // Ensure files can be compiled independently (good for build tools)
+    "allowJs": true, // Allow importing .js files (useful during migration)
+
+    // Specify the root directory of input files
+    "rootDir": "./",
+    // Specify the output directory for compiled files (less relevant when using Webpack/Vite with noEmit)
+    // "outDir": "./dist",
+
+    // Path aliases (optional, but useful)
+    // "paths": {
+    //   "@/*": ["./src/*"]
+    // }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js", // Include JS files if migrating gradually
+    "src/**/*.jsx", // Include JSX files if migrating gradually
+    "electron-main/**/*.ts", // If you separate main process code
+    "electron-preload/**/*.ts", // If you separate preload code
+    "forge.config.ts" // If you convert your forge config to TS
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
