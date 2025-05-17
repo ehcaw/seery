@@ -19,7 +19,7 @@ import "dotenv/config"; // Loads environment variables from .env file
 // plugin that tells the Electron app where to look for the Webpack-bundled app code (depending on
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
-declare const MAIN_WINDOW_PRELOAD_WEBPACK_WEBPACK_ENTRY: string; // Note: Forge v6+ changed this constant name
+declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string; // Note: Forge v6+ changed this constant name
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -40,7 +40,7 @@ const createWindow = (): void => {
     skipTaskbar: true, // Don't appear in the taskbar/dock
     webPreferences: {
       // Use the Webpack-bundled preload script
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_WEBPACK_ENTRY, // Use the magic constant
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY, // Use the magic constant
       contextIsolation: true, // Security: Keep isolated context
       nodeIntegration: false, // Security: Disable Node.js in renderer
     },
@@ -183,7 +183,7 @@ function setupGlobalShortcut(): void {
   console.log("Unregistered previous global shortcuts.");
 
   // Register the shortcut to trigger showing the window and sending action
-  const shortcut = "CommandOrControl+Shift+Space";
+  const shortcut = "CommandOrControl+Shift+x";
   const registered = globalShortcut.register(shortcut, () => {
     console.log(`Global shortcut triggered: ${shortcut}`);
     // showWindow(); // Decide if shortcut should always show window, or renderer controls visibility

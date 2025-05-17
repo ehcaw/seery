@@ -72,11 +72,9 @@ async function startRecording() {
     mediaRecorder.start();
     isRecording = true;
     console.log("Recording started");
-    updateStatus("Recording...", "red");
     checkAudioLevels();
   } catch (error) {
     console.error("Error starting recording:", error);
-    updateStatus("Recording failed", "black");
   }
 }
 
@@ -86,7 +84,6 @@ function stopRecording() {
       mediaRecorder.stop();
       isRecording = false;
       console.log("Recording stopped");
-      updateStatus("Processing...", "blue");
     }, MIN_RECORDING_DURATION);
     return true;
   }
@@ -100,10 +97,8 @@ function checkAudioLevel(dataArray) {
   console.log("Microphone test - Audio level:", average);
   if (average > 10) {
     console.log("Microphone is working and detecting audio");
-    updateStatus("Microphone is working", "green");
   } else {
     console.log("No significant audio detected");
-    updateStatus("No audio detected, check your microphone", "red");
   }
 }
 
@@ -128,7 +123,6 @@ async function testMicrophone() {
     audioContext.close();
   } catch (error) {
     console.error("Error testing microphone:", error);
-    updateStatus("Error testing microphone", "red");
   }
 }
 
@@ -158,12 +152,6 @@ function checkAudioLevels() {
   requestAnimationFrame(checkAudioLevels);
 }
 
-function updateStatus(message, color) {
-  const statusElement = document.getElementById("status");
-  statusElement.textContent = message;
-  statusElement.style.color = color;
-}
-
 async function handleRecordingStop() {
   try {
     console.log("Handling recording stop");
@@ -175,33 +163,26 @@ async function handleRecordingStop() {
 
     if (arrayBuffer.byteLength < 1000) {
       console.warn("Audio data too small, possibly no audio captured");
-      updateStatus("No audio captured, try again", "red");
       return;
     }
 
-    updateStatus("Transcribing...", "blue");
     const response = await window.electronAPI.transcribeAudio(arrayBuffer);
     console.log("Transcription response:", response);
 
     if (response && typeof response === "string" && response.length > 0) {
-      updateStatus("Simulating typing...", "green");
       const success = await window.electronAPI.simulateTyping(response);
       if (success) {
         console.log("Typing simulated successfully");
-        updateStatus("Done", "green");
       } else {
         console.error("Failed to simulate typing");
-        updateStatus("Failed to simulate typing", "red");
       }
     } else {
       console.warn(
         "Empty or invalid transcription result, skipping typing simulation",
       );
-      updateStatus("No transcription, try again", "red");
     }
   } catch (error) {
     console.error("Error in handleRecordingStop:", error);
-    updateStatus("Error processing audio", "red");
   } finally {
     audioChunks = [];
     console.log("Audio chunks cleared");
@@ -228,7 +209,6 @@ console.log("Renderer script fully loaded");
 // Initialize audio when the script loads
 initializeAudio().catch((error) => {
   console.error("Failed to initialize audio on startup:", error);
-  updateStatus("Failed to initialize audio", "red");
 });
 
 listAudioDevices();

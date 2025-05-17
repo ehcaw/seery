@@ -3,24 +3,24 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("electronAPI", {
-  onTestMessage: (callback) =>
+  onTestMessage: (callback: any) =>
     ipcRenderer.on("test-message", (_, message) => callback(message)),
-  onToggleRecording: (callback) => {
+  onToggleRecording: (callback: any) => {
     console.log("Setting up onToggleRecording in preload");
     ipcRenderer.on("toggle-recording", (event) => {
       console.log("toggle-recording event received in preload", event);
       callback();
     });
   },
-  transcribeAudio: (arrayBuffer) => {
+  transcribeAudio: (arrayBuffer: any) => {
     console.log("ArrayBuffer size in preload:", arrayBuffer.byteLength);
     return ipcRenderer.invoke("transcribe-audio", arrayBuffer);
   },
   hideWindow: () => ipcRenderer.invoke("hide-window"),
-  simulateTyping: (text) => ipcRenderer.invoke("simulate-typing", text),
+  simulateTyping: (text: any) => ipcRenderer.invoke("simulate-typing", text),
   requestMicrophoneAccess: () =>
     ipcRenderer.invoke("request-microphone-access"),
-  onTranscriptionResult: (callback) =>
+  onTranscriptionResult: (callback: any) =>
     ipcRenderer.on("transcription-result", (_, result) => callback(result)),
 });
 
