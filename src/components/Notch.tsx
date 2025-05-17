@@ -13,7 +13,7 @@ type NotchState =
 const NotchComponent: React.FC<{
   onChange?: (state: NotchState) => void;
 }> = ({ onChange }) => {
-  const [currentState, setCurrentState] = useState<NotchState>("inactive");
+  const [currentState, setCurrentState] = useState<NotchState>("dormant");
   const [isMorphing, setIsMorphing] = useState<boolean>(false);
 
   useEffect(() => onChange?.(currentState), [currentState, onChange]);
@@ -59,8 +59,8 @@ const NotchComponent: React.FC<{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            width: "40px",
-            height: "40px",
+            width: "70px",
+            height: "70px",
           }}
         >
           {svgMap[currentState]}
