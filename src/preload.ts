@@ -17,11 +17,12 @@ contextBridge.exposeInMainWorld("electronAPI", {
     return ipcRenderer.invoke("transcribe-audio", arrayBuffer);
   },
   hideWindow: () => ipcRenderer.invoke("hide-window"),
-  simulateTyping: (text: any) => ipcRenderer.invoke("simulate-typing", text),
   requestMicrophoneAccess: () =>
     ipcRenderer.invoke("request-microphone-access"),
   onTranscriptionResult: (callback: any) =>
     ipcRenderer.on("transcription-result", (_, result) => callback(result)),
+  runPrompt: (promptText: string) =>
+    ipcRenderer.invoke("goose:runPrompt", promptText),
 });
 
 console.log("Preload script executed");
